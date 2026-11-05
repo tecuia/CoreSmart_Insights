@@ -58,6 +58,104 @@
 
     <!-- ===== СТРАНИЦА: ГЛАВНАЯ ===== -->
     <section class="page" data-page="home">
+      <!-- МОБИЛЬНАЯ ВЕРСИЯ ГЛАВНОЙ -->
+      <div class="mobile-home">
+        <div class="mobile-home__bg" style="background-image: url('imgs/dobro.png');"></div>
+        <div class="mobile-home__overlay"></div>
+        
+        <div class="mobile-home__content">
+          <img class="mobile-home__logo" src="imgs/dobro_logo.png" alt="Доброград">
+          
+          <h1 class="mobile-home__title">
+            Статистика и показатели рекламной кампании <span class="text-cyan">CoreSmart Native</span>
+          </h1>
+
+          <div class="mobile-about">
+            <button type="button" class="mobile-about__header" aria-expanded="false">
+              <span class="mobile-about__label">О ПРОЕКТЕ</span>
+              <svg class="mobile-about__chevron" viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            
+            <p class="mobile-about__text">Доброград — жилой комплекс нового поколения. CoreSmart Native — нативная рекламная платформа для привлечения целевой аудитории.</p>
+            
+            <div class="mobile-about__expanded">
+              <h3 class="mobile-about__heading">Нативная рекламная кампания</h3>
+              <div class="mobile-about__paragraphs">
+                <p class="mobile-about__desc">Проект CoreSmart Native для Доброграда включал создание трёх нативных статей, направленных на разные сегменты целевой аудитории: семьи с детьми, молодые профессионалы и потенциальные переселенцы из Москвы.</p>
+                <p class="mobile-about__desc">Каждая статья раскрывала конкретные преимущества жилого комплекса через призму жизненных сценариев целевой аудитории.</p>
+              </div>
+              
+              <div class="mobile-about__period">
+                <span class="mobile-about__period-label">ПЕРИОД РЕКЛАМНОЙ КАМПАНИИ</span>
+                <span class="mobile-about__period-value">18 июня — 30 июля 2026</span>
+                <span class="mobile-about__period-caption">43 дня активного размещения</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mobile-carousel">
+            <div class="mobile-carousel__track">
+              <!-- Карточка 1 -->
+              <div class="mobile-card">
+                <div class="mobile-card__image">
+                  <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                </div>
+                <span class="mobile-card__badge">33,0% CR перехода</span>
+                <h3 class="mobile-card__title">Статья №1 · Дети и школа</h3>
+                <p class="mobile-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                <a href="#" class="mobile-card__link" data-page="article-1">Перейти к статье</a>
+              </div>
+              <!-- Карточка 2 -->
+              <div class="mobile-card">
+                <div class="mobile-card__image">
+                  <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                </div>
+                <span class="mobile-card__badge">33,0% CR перехода</span>
+                <h3 class="mobile-card__title">Статья №1 · Дети и школа</h3>
+                <p class="mobile-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                <a href="#" class="mobile-card__link" data-page="article-1">Перейти к статье</a>
+              </div>
+              <!-- Карточка 3 -->
+              <div class="mobile-card">
+                <div class="mobile-card__image">
+                  <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                </div>
+                <span class="mobile-card__badge">33,0% CR перехода</span>
+                <h3 class="mobile-card__title">Статья №1 · Дети и школа</h3>
+                <p class="mobile-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                <a href="#" class="mobile-card__link" data-page="article-1">Перейти к статье</a>
+              </div>
+            </div>
+            
+            <!-- Индикатор (теперь внутри кейса) -->
+            <div class="mobile-carousel__dots">
+              <span class="mobile-carousel__dot is-active"></span>
+              <span class="mobile-carousel__dot"></span>
+              <span class="mobile-carousel__dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Навигационное меню -->
+        <nav class="mobile-nav" id="mobileNav">
+          <div class="mobile-nav__links">
+            <a href="#" class="mobile-nav__link is-active" data-page="home">Главная</a>
+            <a href="#" class="mobile-nav__link" data-page="overview">Показатели</a>
+            <a href="#" class="mobile-nav__link" data-page="article-1">Статьи</a>
+            <a href="#" class="mobile-nav__link" data-page="bundles">Связки</a>
+            <a href="#" class="mobile-nav__link" data-page="conclusions">Выводы</a>
+          </div>
+          <div class="mobile-nav__toggle">
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line mobile-nav__line--active"></span>
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line"></span>
+          </div>
+        </nav>
+      </div>
       <!-- HERO -->
       <div class="hero">
         <img class="hero__bg" src="imgs/dobro.png" alt="">
@@ -332,7 +430,354 @@
 
     <!-- ===== СТРАНИЦА: ОБЩИЕ ПОКАЗАТЕЛИ ===== -->
     <section class="page" data-page="overview" hidden>
+            <!-- МОБИЛЬНАЯ ВЕРСИЯ ПОКАЗАТЕЛЕЙ -->
+      <div class="mobile-overview">
+        
+        <!-- Баннер предупреждения -->
+        <div class="mobile-banner" id="mobileBanner">
+          <p class="mobile-banner__text">Вы смотрите сокращенную версию отчета для мобильных устройств. Полную версию можно посмотреть по этой же ссылке с десктопным устройств.</p>
+          <button type="button" class="mobile-banner__close" id="closeBanner" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
 
+        <div class="mobile-overview__content">
+          <header class="mobile-header">
+            <span class="mobile-header__eyebrow">Dobrograd</span>
+            <h1 class="mobile-header__title">Общие показатели рекламной кампании</h1>
+            <p class="mobile-header__period">2026-06-18 - 2026-07-30</p>
+          </header>
+
+          <!-- Общая оценка -->
+          <section class="mobile-section">
+            <h2 class="mobile-section__title">Общая оценка проекта</h2>
+            <p class="mobile-section__subtitle">Итог по KPI, экономике и роли трёх контентных сценариев в общей воронке CoreSmart Native.</p>
+            
+            <div class="mobile-metrics-grid">
+              <!-- Визиты -->
+              <div class="mobile-metric-card">
+                <div class="mobile-metric-card__head">
+                  <img src="imgs/eye.svg" alt="" width="20" height="20">
+                  <span class="mobile-metric-card__label text-cyan">Визиты</span>
+                </div>
+                <span class="mobile-metric-card__plan">План: 17 857</span>
+                <span class="mobile-metric-card__percent">Выполнение: 122,9%</span>
+                <span class="mobile-metric-card__value">21 945</span>
+              </div>
+
+              <!-- Переходы -->
+              <div class="mobile-metric-card">
+                <div class="mobile-metric-card__head">
+                  <img src="imgs/target_1.svg" alt="" width="20" height="20">
+                  <span class="mobile-metric-card__label text-green">Переходы</span>
+                </div>
+                <span class="mobile-metric-card__plan">План: 6 427</span>
+                <span class="mobile-metric-card__percent">Выполнение: 100,4%</span>
+                <span class="mobile-metric-card__value">6 452</span>
+              </div>
+
+              <!-- Дочитывания -->
+              <div class="mobile-metric-card mobile-metric-card--full">
+                <div class="mobile-metric-card__head">
+                  <img src="imgs/flag.svg" alt="" width="20" height="20">
+                  <span class="mobile-metric-card__label text-purple">Дочитывания</span>
+                </div>
+                <span class="mobile-metric-card__plan">План: 6 694</span>
+                <span class="mobile-metric-card__percent">Выполнение: 104,6%</span>
+                <span class="mobile-metric-card__value">7 003</span>
+              </div>
+
+              <!-- Бюджет -->
+              <div class="mobile-metric-card mobile-metric-card--small">
+                <span class="mobile-metric-card__label text-amber">Бюджет</span>
+                <span class="mobile-metric-card__percent">↑ 100% плана</span>
+                <span class="mobile-metric-card__value mobile-metric-card__value--sm">500 000 ₽</span>
+              </div>
+
+              <!-- CPV -->
+              <div class="mobile-metric-card mobile-metric-card--small">
+                <span class="mobile-metric-card__label text-pink">CPV</span>
+                <span class="mobile-metric-card__percent">↓ −18,6% экономия</span>
+                <span class="mobile-metric-card__value mobile-metric-card__value--sm">22,78 ₽</span>
+              </div>
+
+              <!-- CPA дочитывания -->
+              <div class="mobile-metric-card mobile-metric-card--small">
+                <span class="mobile-metric-card__label text-cyan">CPA (дочитывания)</span>
+                <span class="mobile-metric-card__percent">В рамках бюджета</span>
+                <span class="mobile-metric-card__value mobile-metric-card__value--sm">71,40 ₽</span>
+              </div>
+
+              <!-- CPA переходы -->
+              <div class="mobile-metric-card mobile-metric-card--small">
+                <span class="mobile-metric-card__label text-purple">CPA (переходы)</span>
+                <span class="mobile-metric-card__percent">В рамках бюджета</span>
+                <span class="mobile-metric-card__value mobile-metric-card__value--sm">77,50 ₽</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Ключевые статьи -->
+          <section class="mobile-section">
+            <h2 class="mobile-section__title">Ключевые статьи</h2>
+            
+            <div class="mobile-carousel">
+              <div class="mobile-carousel__track">
+                <!-- Карточка 1 -->
+                <div class="mobile-article-card">
+                  <div class="mobile-article-card__image">
+                    <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                  </div>
+                  <span class="mobile-article-card__badge text-cyan">33,0% CR перехода</span>
+                  <h3 class="mobile-article-card__title">Статья №1 · Дети и школа</h3>
+                  <p class="mobile-article-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                  <a href="#" class="mobile-article-card__link" data-page="article-1">Перейти к статье</a>
+                </div>
+
+                <!-- Карточка 2 (дубль) -->
+                <div class="mobile-article-card">
+                  <div class="mobile-article-card__image">
+                    <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                  </div>
+                  <span class="mobile-article-card__badge text-cyan">33,0% CR перехода</span>
+                  <h3 class="mobile-article-card__title">Статья №1 · Дети и школа</h3>
+                  <p class="mobile-article-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                  <a href="#" class="mobile-article-card__link" data-page="article-1">Перейти к статье</a>
+                </div>
+
+                <!-- Карточка 3 (дубль) -->
+                <div class="mobile-article-card">
+                  <div class="mobile-article-card__image">
+                    <img src="imgs/preview.svg" alt="Превью" width="24" height="24">
+                  </div>
+                  <span class="mobile-article-card__badge text-cyan">33,0% CR перехода</span>
+                  <h3 class="mobile-article-card__title">Статья №1 · Дети и школа</h3>
+                  <p class="mobile-article-card__desc">Лучший CR перехода внутри контента и лучший post-click CR — 14,56%. Образование и школа полного дня работают как конкретная рациональная причина рассматривать переезд.</p>
+                  <a href="#" class="mobile-article-card__link" data-page="article-1">Перейти к статье</a>
+                </div>
+              </div>
+              <div class="mobile-carousel__dots">
+                <span class="mobile-carousel__dot is-active"></span>
+                <span class="mobile-carousel__dot"></span>
+                <span class="mobile-carousel__dot"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Роль CoreSmart -->
+          <section class="mobile-coresmart">
+            <h3 class="mobile-coresmart__title">РОЛЬ CORESMART:</h3>
+            <p class="mobile-coresmart__text">Проект показал, что один объект недвижимости нельзя оценивать через одну универсальную коммуникацию. Три статьи выявили три разных типа ценности: высокий интерес к переезду, высокую конверсионность статьи про образование для детей и стабильный post-click статьи про «жизнь как отпуск».</p>
+          </section>
+
+          <!-- Показатели по статьям -->
+          <section class="mobile-section">
+            <h2 class="mobile-section__title">Показатели по статьям</h2>
+            <p class="mobile-section__subtitle">Сравнение объёма, дочитываний, переходов, CR и времени чтения.</p>
+            
+            <h3 class="mobile-section__subtitle-bold">Сравнение по статьям</h3>
+            
+            <div class="mobile-carousel">
+              <div class="mobile-carousel__track">
+                <!-- Таблица 1 -->
+                <div class="mobile-table-card">
+                  <div class="mobile-table-card__header">
+                    <span class="mobile-table-card__label">МЕТРИКА</span>
+                    <div class="mobile-table-card__col">
+                      <span class="mobile-table-card__name text-cyan">Статья №1</span>
+                      <span class="mobile-table-card__desc">Дети и школа</span>
+                    </div>
+                  </div>
+                  <div class="mobile-table-card__row"><span>Визиты</span><span>5 520</span></div>
+                  <div class="mobile-table-card__row"><span>Дочитывания</span><span>1 941</span></div>
+                  <div class="mobile-table-card__row"><span>Переходы</span><span>1 822</span></div>
+                  <div class="mobile-table-card__row"><span>CR дочитывания, %</span><span class="text-cyan">35,2</span></div>
+                  <div class="mobile-table-card__row"><span>CR перехода, %</span><span class="text-cyan">33,0</span></div>
+                  <div class="mobile-table-card__row"><span>Ср. время, мин</span><span>0,6</span></div>
+                </div>
+
+                <!-- Таблица 2 -->
+                <div class="mobile-table-card">
+                  <div class="mobile-table-card__header">
+                    <span class="mobile-table-card__label">МЕТРИКА</span>
+                    <div class="mobile-table-card__col">
+                      <span class="mobile-table-card__name text-cyan">Статья №1</span>
+                      <span class="mobile-table-card__desc">Дети и школа</span>
+                    </div>
+                  </div>
+                  <div class="mobile-table-card__row"><span>Визиты</span><span>5 520</span></div>
+                  <div class="mobile-table-card__row"><span>Дочитывания</span><span>1 941</span></div>
+                  <div class="mobile-table-card__row"><span>Переходы</span><span>1 822</span></div>
+                  <div class="mobile-table-card__row"><span>CR дочитывания, %</span><span class="text-cyan">35,2</span></div>
+                  <div class="mobile-table-card__row"><span>CR перехода, %</span><span class="text-cyan">33,0</span></div>
+                  <div class="mobile-table-card__row"><span>Ср. время, мин</span><span>0,6</span></div>
+                </div>
+
+                <!-- Таблица 3 -->
+                <div class="mobile-table-card">
+                  <div class="mobile-table-card__header">
+                    <span class="mobile-table-card__label">МЕТРИКА</span>
+                    <div class="mobile-table-card__col">
+                      <span class="mobile-table-card__name text-cyan">Статья №1</span>
+                      <span class="mobile-table-card__desc">Дети и школа</span>
+                    </div>
+                  </div>
+                  <div class="mobile-table-card__row"><span>Визиты</span><span>5 520</span></div>
+                  <div class="mobile-table-card__row"><span>Дочитывания</span><span>1 941</span></div>
+                  <div class="mobile-table-card__row"><span>Переходы</span><span>1 822</span></div>
+                  <div class="mobile-table-card__row"><span>CR дочитывания, %</span><span class="text-cyan">35,2</span></div>
+                  <div class="mobile-table-card__row"><span>CR перехода, %</span><span class="text-cyan">33,0</span></div>
+                  <div class="mobile-table-card__row"><span>Ср. время, мин</span><span>0,6</span></div>
+                </div>
+              </div>
+              <div class="mobile-carousel__dots">
+                <span class="mobile-carousel__dot is-active"></span>
+                <span class="mobile-carousel__dot"></span>
+                <span class="mobile-carousel__dot"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Динамика по статьям -->
+          <section class="mobile-section">
+            <h2 class="mobile-section__title">Динамика по статьям</h2>
+            <p class="mobile-section__subtitle">Суммарная динамика визитов, дочитываний и переходов по трём материалам в течение периода. Источник: Яндекс.Метрика.</p>
+            
+            <h3 class="mobile-section__subtitle-bold">Ключевые точки динамики</h3>
+            
+            <div class="mobile-carousel">
+              <div class="mobile-carousel__track">
+                <!-- Карточка 1 -->
+                <div class="mobile-dynamics-card">
+                  <span class="mobile-dynamics-card__badge text-cyan">Максимум визитов</span>
+                  <span class="mobile-dynamics-card__value">8 июля — 2 080 визитов</span>
+                  <p class="mobile-dynamics-card__desc">Первый крупный пик трафика. Вероятно связан с публикацией или усилением промо кампании.</p>
+                </div>
+                <!-- Карточка 2 -->
+                <div class="mobile-dynamics-card">
+                  <span class="mobile-dynamics-card__badge text-amber">Спад активности</span>
+                  <span class="mobile-dynamics-card__value">8 июля — 2 080 визитов</span>
+                  <p class="mobile-dynamics-card__desc">После пика 8 июля наблюдается резкий спад до ~150 визитов в день. Возможные причины: окончание промо-периода или технические факторы.</p>
+                </div>
+                <!-- Карточка 3 -->
+                <div class="mobile-dynamics-card">
+                  <span class="mobile-dynamics-card__badge text-green">Второй пик</span>
+                  <span class="mobile-dynamics-card__value">28-29 июля — 1 980 визитов</span>
+                  <p class="mobile-dynamics-card__desc">Второй крупный пик с более высокой конверсией в дочитывания и переходы. Аудитория качественнее, чем в первом пике.</p>
+                </div>
+              </div>
+              <div class="mobile-carousel__dots">
+                <span class="mobile-carousel__dot is-active"></span>
+                <span class="mobile-carousel__dot"></span>
+                <span class="mobile-carousel__dot"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Сводка периода -->
+          <section class="mobile-section">
+            <h3 class="mobile-section__subtitle-bold">Сводка периода</h3>
+            <div class="mobile-summary-grid">
+              <div class="mobile-summary-card">
+                <span class="mobile-summary-card__label">Всего визитов</span>
+                <span class="mobile-summary-card__value text-cyan">21 945</span>
+                <span class="mobile-summary-card__caption">за 43 дня</span>
+              </div>
+              <div class="mobile-summary-card">
+                <span class="mobile-summary-card__label">Среднее в день</span>
+                <span class="mobile-summary-card__value text-purple">510</span>
+                <span class="mobile-summary-card__caption">визитов в день</span>
+              </div>
+              <div class="mobile-summary-card">
+                <span class="mobile-summary-card__label">Пиковый день</span>
+                <span class="mobile-summary-card__value text-green">2 080</span>
+                <span class="mobile-summary-card__caption">8 июля</span>
+              </div>
+              <div class="mobile-summary-card">
+                <span class="mobile-summary-card__label">Минимальный день</span>
+                <span class="mobile-summary-card__value text-amber">~50</span>
+                <span class="mobile-summary-card__caption">18 июня (старт)</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Общие выводы -->
+          <section class="mobile-section">
+            <h2 class="mobile-section__title">Общие выводы</h2>
+            <p class="mobile-section__subtitle">Итоговая оценка проекта Доброград × CoreSmart Native.</p>
+            
+            <div class="mobile-carousel">
+              <div class="mobile-carousel__track">
+                <!-- Карточка 1 -->
+                <div class="mobile-conclusion-card">
+                  <h3 class="mobile-conclusion-card__title text-cyan">1. Проект успешен по бизнес-KPI и экономике привлечения</h3>
+                  <p class="mobile-conclusion-card__text">Все три абсолютных KPI выполнены: визиты — 122,9% плана, дочитывания — 104,6%, переходы — 100,4%. При этом CPV оказался примерно на 18,6% ниже расчётного планового уровня. Кампания доказала возможность масштабировать входящий трафик без потери абсолютного результата нижней части нативной воронки.</p>
+                  <div class="mobile-conclusion-card__metrics">
+                    <span class="mobile-conclusion-card__metric text-cyan">Визиты - 122,9%</span>
+                    <span class="mobile-conclusion-card__metric text-cyan">Дочитывания - 104,6%</span>
+                    <span class="mobile-conclusion-card__metric text-cyan">Переходы - 100,4%</span>
+                    <span class="mobile-conclusion-card__metric text-green">18,6% ниже</span>
+                  </div>
+                </div>
+                <!-- Карточка 2 -->
+                <div class="mobile-conclusion-card">
+                  <h3 class="mobile-conclusion-card__title text-purple">2. Интерес к инфраструктуре подтверждается поведением в статье и post-click</h3>
+                  <p class="mobile-conclusion-card__text">В статье №3 ключевое внимание аудитории было сосредоточено на блоке «Как меняется обычный день после переезда в Доброград». Этот интерес подтверждается post-click: аудитория персонализированного сценария A2 показала 9,71% CR в избранные цели против ~7% у общего потока. Интерес к близости инфраструктуры сохраняется после чтения, если продолжение коммуникации соответствует проявленному интересу.</p>
+                  <div class="mobile-conclusion-card__metrics">
+                    <span class="mobile-conclusion-card__metric text-purple">9,71% CR</span>
+                  </div>
+                </div>
+                <!-- Карточка 3 -->
+                <div class="mobile-conclusion-card">
+                  <h3 class="mobile-conclusion-card__title text-green">3. «Школа полного дня» и «Вейк-парк» — ключевые УТП</h3>
+                  <p class="mobile-conclusion-card__text">Статья №1 показала самый высокий CR дочитываний и конверсию в переходы, а блок «Школа полного дня» был прочитан 87% аудитории — максимальный показатель кампании. Статья №2 подтвердила, что блок «Вейк-парк» вызвал наибольший интерес по глубине скролла и времени чтения. Оба УТП следует усилить в следующих коммуникациях.</p>
+                  <div class="mobile-conclusion-card__metrics">
+                    <span class="mobile-conclusion-card__metric text-green">Школа полного дня</span>
+                    <span class="mobile-conclusion-card__metric text-green">Вейк-парк</span>
+                    <span class="mobile-conclusion-card__metric text-green">87%</span>
+                  </div>
+                </div>
+                <!-- Карточка 4 -->
+                <div class="mobile-conclusion-card">
+                  <h3 class="mobile-conclusion-card__title text-amber">4. Персонализированные переходы усиливают post-click конверсию</h3>
+                  <p class="mobile-conclusion-card__text">Персонализированный сценарий A1 обеспечил 21,70% CR в целевые действия — лучший результат кампании. Общий переход через CoreSmart показал 14,07% CR и среднее время 2 мин 10 сек, что превосходит типичные показатели нативных размещений. Персонализация на основе прочитанного контента — главный драйвер post-click эффективности.</p>
+                  <div class="mobile-conclusion-card__metrics">
+                    <span class="mobile-conclusion-card__metric text-amber">21,70% CR</span>
+                    <span class="mobile-conclusion-card__metric text-amber">14,07% CR</span>
+                    <span class="mobile-conclusion-card__metric text-amber">2 мин 10 сек</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mobile-carousel__dots">
+                <span class="mobile-carousel__dot is-active"></span>
+                <span class="mobile-carousel__dot"></span>
+                <span class="mobile-carousel__dot"></span>
+                <span class="mobile-carousel__dot"></span>
+              </div>
+            </div>
+          </section>
+
+        </div>
+        
+        <!-- Навигационное меню -->
+        <nav class="mobile-nav" id="mobileNav">
+          <div class="mobile-nav__links">
+            <a href="#" class="mobile-nav__link" data-page="home">Главная</a>
+            <a href="#" class="mobile-nav__link is-active" data-page="overview">Показатели</a>
+            <a href="#" class="mobile-nav__link" data-page="article-1">Статьи</a>
+            <a href="#" class="mobile-nav__link" data-page="bundles">Связки</a>
+            <a href="#" class="mobile-nav__link" data-page="conclusions">Выводы</a>
+          </div>
+          <div class="mobile-nav__toggle">
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line mobile-nav__line--active"></span>
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line"></span>
+            <span class="mobile-nav__line"></span>
+          </div>
+        </nav>
+
+      </div>
       <!-- ОТЧЁТ -->
       <section class="report">
         <div class="report__container">

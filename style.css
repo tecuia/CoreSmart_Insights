@@ -65,7 +65,9 @@ body::-webkit-scrollbar {
 .task,
 .campaign-articles,
 .hypotheses,
-.metrics {
+.metrics,
+.dynamics,
+.conclusions {
   padding-left: var(--section-x);
   padding-right: var(--section-x);
 }
@@ -1283,6 +1285,11 @@ body::-webkit-scrollbar {
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
 }
 
 .metric-card--medium {
@@ -1317,6 +1324,8 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .metric-card__label-group {
@@ -1376,55 +1385,48 @@ body::-webkit-scrollbar {
 .metric-card__value {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 48px;
-  line-height: 52px;
+  font-size: clamp(32px, 3vw, 48px);
+  line-height: 1.1;
   letter-spacing: -1.5px;
   color: var(--text-primary);
 }
 
 .metric-card__value--small {
-  font-size: 36px;
-  line-height: 40px;
+  font-size: clamp(24px, 2.5vw, 36px);
+  line-height: 1.1;
   letter-spacing: -1px;
 }
 
+/* Позиционирование через Grid */
 .metric-card--medium .metric-card__tag {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  justify-self: end;
 }
 
-.metric-card--medium .metric-card__data {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
+.metric-card__data {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.metric-card--medium .metric-card__chart {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  min-width: 0; 
 }
 
 .metric-card--small .metric-card__data {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
 }
 
-.metric-card--small .metric-card__chart {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+.metric-card__chart {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: end;
+  justify-self: end;
 }
 
+/* Графики */
 .chart-bars {
   display: flex;
   gap: 12px;
@@ -1454,6 +1456,7 @@ body::-webkit-scrollbar {
 
 .chart-progress {
   width: 234px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1503,6 +1506,7 @@ body::-webkit-scrollbar {
 .chart-gauge {
   width: 140px;
   height: 75px;
+  max-width: 100%;
   color: var(--accent);
 }
 
@@ -1520,15 +1524,18 @@ body::-webkit-scrollbar {
 .chart-area {
   width: 154px;
   height: 64px;
+  max-width: 100%;
   color: var(--accent);
 }
 
 .chart-range {
   width: 145px;
   height: 73px;
+  max-width: 100%;
   color: var(--accent);
 }
 
+/* Цитата */
 .quote-block {
   display: flex;
   align-items: flex-start;
@@ -4615,7 +4622,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  flex: 0 0 995px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .pattern-card {
@@ -4629,8 +4637,9 @@ body {
 
 .pattern-card__preview {
   position: relative;
-  width: 320px;
-  height: 232px;
+  width: clamp(180px, 30%, 320px);
+  aspect-ratio: 320 / 232;
+  height: auto;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -4675,7 +4684,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  flex: 1;
+  flex: 1 1 0;
   min-width: 0;
 }
 
@@ -4712,13 +4721,15 @@ body {
 
 .pattern-card__metrics {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 16px 24px;
 }
 
 .pattern-card__metric {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .pattern-card__metric-val {
@@ -4764,10 +4775,11 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .pattern-topic__name {
-  width: 180px;
+  width: clamp(110px, 30%, 180px);
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 13px;
@@ -4776,10 +4788,12 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 
 .pattern-topic__track {
-  width: 240px;
+  flex: 1 1 60px;
+  min-width: 60px;
   height: 8px;
   background: var(--border);
   border-radius: 4px;
@@ -4799,10 +4813,12 @@ body {
   line-height: 14px;
   color: var(--text-primary);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .patterns__chart {
-  flex: 1;
+  flex: 0 1 380px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4810,8 +4826,8 @@ body {
 
 .pattern-donut {
   position: relative;
-  width: 380px;
-  height: 380px;
+  width: 100%;
+  aspect-ratio: 1;
 }
 
 .pattern-donut__svg {
@@ -4834,7 +4850,7 @@ body {
 .pattern-donut__val {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 36px;
+  font-size: clamp(24px, 2.4vw, 36px);
   line-height: 44px;
   letter-spacing: -1px;
   color: var(--text-primary);
@@ -4852,7 +4868,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 380px;
+  width: 100%;
   padding-top: 24px;
 }
 
@@ -4860,6 +4876,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .pattern-donut__dot {
@@ -4870,12 +4887,16 @@ body {
 }
 
 .pattern-donut__legend-id {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 13px;
   line-height: 14px;
   color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pattern-donut__legend-percent {
@@ -4884,6 +4905,7 @@ body {
   font-size: 14px;
   line-height: 15px;
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .pattern-insight {
@@ -5691,7 +5713,7 @@ body {
 
 .post-kpi {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -5700,6 +5722,7 @@ body {
   flex-direction: column;
   gap: 16px;
   padding: 24px;
+  min-width: 0;
   background: var(--bg-subtle);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -5708,8 +5731,9 @@ body {
 
 .post-kpi__head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  min-width: 0;
 }
 
 .post-kpi__head img {
@@ -5726,14 +5750,16 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-muted);
+  min-width: 0;
 }
 
 .post-kpi__value {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 36px;
-  line-height: 40px;
+  font-size: clamp(22px, 2vw, 36px);
+  line-height: 1.1;
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
 .post-kpi__card--primary   .post-kpi__value { color: var(--accent-primary); }
@@ -5761,7 +5787,7 @@ body {
 .post-table__wrap {
   border: 1px solid var(--border);
   border-radius: 16px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .post-table__table {
@@ -7292,4 +7318,940 @@ body {
   font-size: 14px;
   line-height: 22px;
   color: var(--accent-secondary);
+}
+
+.mobile-home,
+.mobile-overview,
+.mobile-nav,
+.mobile-banner {
+  display: none;
+}
+/* ============================================================
+   МОБИЛЬНАЯ ВЕРСИЯ (ДО 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .site-header,
+  .site-footer,
+  .hero,
+  .about,
+  .task,
+  .campaign-articles,
+  .hypotheses {
+    display: none !important;
+  }
+
+  .mobile-home {
+    display: block;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .mobile-home__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .mobile-home__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 16, 16, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1;
+  }
+
+  .mobile-home__content {
+    position: relative;
+    z-index: 2;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .mobile-home__logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .mobile-home__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 28px;
+    color: #F8F9FA;
+  }
+
+  .mobile-home__title .text-cyan {
+    color: var(--accent-primary);
+  }
+
+  /* Карточка "О проекте" */
+  .mobile-about {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: rgba(248, 249, 250, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Заголовок-кнопка */
+  .mobile-about__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .mobile-about__label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  .mobile-about__chevron {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-about.is-open .mobile-about__chevron {
+    transform: rotate(180deg);
+    color: var(--accent-primary);
+  }
+
+  /* Превью-текст (закрытое состояние) */
+  .mobile-about__text {
+    margin-top: 4px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 140%;
+    color: var(--text-secondary);
+    max-height: 100px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.25s ease, margin 0.3s ease;
+  }
+
+  .mobile-about.is-open .mobile-about__text {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+  }
+
+  /* Раскрывающийся контент */
+  .mobile-about__expanded {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease 0.1s;
+  }
+
+  .mobile-about.is-open .mobile-about__expanded {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+
+  .mobile-about__heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-primary);
+  }
+
+  .mobile-about__paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-about__desc {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: var(--text-secondary);
+  }
+
+  /* Карточка периода */
+  .mobile-about__period {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 12px 12px 12px 16px;
+    background: linear-gradient(90deg, rgba(0, 180, 216, 0.05) 0%, rgba(124, 58, 237, 0.03) 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 12px;
+  }
+
+  .mobile-about__period-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  .mobile-about__period-value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-primary);
+  }
+
+  .mobile-about__period-caption {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 14px;
+    color: var(--text-secondary);
+  }
+
+  .mobile-carousel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .mobile-carousel__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mobile-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 40px 12px; 
+    background: #F8F9FA;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-card__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 248px;
+    background: var(--border);
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .mobile-card__badge {
+    align-self: flex-start;
+    padding: 6px 12px;
+    background: var(--accent-primary);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--bg-white);
+    margin-bottom: 8px;
+  }
+
+  .mobile-card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .mobile-card__desc {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .mobile-card__link {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .mobile-carousel__dots {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+  }
+
+  .mobile-carousel__dot {
+    width: 12px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-carousel__dot.is-active {
+    width: 32px;
+    height: 4px;
+    background: var(--text-secondary);
+  }
+
+  .mobile-nav {
+    display: block;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 104px;
+    background: #F8F9FA;
+    border: 1px solid #E5E7EB;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    box-shadow: -4px 2px 16px 1px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    cursor: pointer;
+    transition: width 0.3s ease, height 0.3s ease;
+    overflow: hidden;
+  }
+
+  .mobile-nav.is-open {
+    width: 120px;
+    height: 140px;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .mobile-nav__toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-nav.is-open .mobile-nav__toggle {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobile-nav__line {
+    width: 8px;
+    height: 1px;
+    background: #8A8A8A;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .mobile-nav__line--active {
+    width: 12px;
+    height: 2px;
+    background: #00B4D8;
+  }
+
+  .mobile-nav__links {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    height: 100%;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease 0.1s;
+    z-index: 1;
+  }
+
+  .mobile-nav.is-open .mobile-nav__links {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-nav__link {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav__link.is-active {
+    color: var(--accent-primary);
+  }
+
+  .mobile-nav__link.is-active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-primary);
+    margin-top: 2px;
+  }
+    /* ============================================================
+     МОБИЛЬНАЯ ВЕРСИЯ: ПОКАЗАТЕЛИ
+     ============================================================ */
+
+  /* Скрываем десктопные элементы на этой странице */
+  .page[data-page="overview"] .report,
+  .page[data-page="overview"] .overview,
+  .page[data-page="overview"] .articles,
+  .page[data-page="overview"] .metrics,
+  .page[data-page="overview"] .dynamics,
+  .page[data-page="overview"] .conclusions {
+    display: none !important;
+  }
+
+  .mobile-overview {
+    display: block;
+    background: var(--bg-white);
+    min-height: 100vh;
+  }
+
+  /* Баннер */
+  .mobile-banner {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--accent-primary);
+    padding: 12px 44px 12px 20px;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 12px rgba(0, 180, 216, 0.2);
+  }
+
+  .mobile-banner__text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 140%;
+    color: #F8F9FA;
+  }
+
+  .mobile-banner__close {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #E5E7EB;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Контент */
+  .mobile-overview__content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* Заголовок */
+  .mobile-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .mobile-header__eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+  }
+
+  .mobile-header__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-primary);
+  }
+
+  .mobile-header__period {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: var(--text-secondary);
+  }
+
+  /* Секции */
+  .mobile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-section__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--text-primary);
+  }
+
+  .mobile-section__subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: var(--text-secondary);
+  }
+
+  .mobile-section__subtitle-bold {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-primary);
+    margin-top: 8px;
+  }
+
+  /* Сетка метрик */
+  .mobile-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .mobile-metric-card {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    position: relative;
+  }
+
+  .mobile-metric-card--full {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mobile-metric-card--small {
+    gap: 4px;
+  }
+
+  .mobile-metric-card__head {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .mobile-metric-card__head svg {
+    flex-shrink: 0;
+  }
+
+  .mobile-metric-card__label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .mobile-metric-card__plan {
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--text-muted);
+  }
+
+  .mobile-metric-card__percent {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--accent-tertiary);
+    margin-top: 4px;
+  }
+
+  .mobile-metric-card__value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 28px;
+    color: var(--text-primary);
+    margin-top: auto;
+  }
+
+  .mobile-metric-card__value--sm {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .text-cyan { color: var(--accent-primary); }
+  .text-green { color: var(--accent-tertiary); }
+  .text-purple { color: var(--accent-secondary); }
+  .text-amber { color: var(--accent-highlight); }
+  .text-pink { color: var(--pink); }
+
+  /* Карусель (уже есть, но уточним для карточек) */
+  .mobile-carousel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .mobile-carousel__track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 24px; /* Место для точек */
+  }
+
+  .mobile-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Карточка статьи */
+  .mobile-article-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-article-card__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background: var(--border);
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .mobile-article-card__badge {
+    align-self: flex-start;
+    padding: 6px 12px;
+    background: var(--accent-primary);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--bg-white);
+    margin-bottom: 8px;
+  }
+
+  .mobile-article-card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .mobile-article-card__desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .mobile-article-card__link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--accent-primary);
+    text-decoration: none;
+    margin-bottom: 16px;
+  }
+
+  /* Блок CoreSmart */
+  .mobile-coresmart {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.04) 0%, rgba(0, 180, 216, 0.04) 100%);
+    border-left: 4px solid var(--accent-secondary);
+    border-radius: 0 16px 16px 0;
+  }
+
+  .mobile-coresmart__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: var(--accent-secondary);
+  }
+
+  .mobile-coresmart__text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--text-primary);
+  }
+
+  /* Таблицы */
+  .mobile-table-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .mobile-table-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 12px;
+    background: var(--bg-white);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .mobile-table-card__label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .mobile-table-card__col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .mobile-table-card__name {
+    font-family: var(--font-display);
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+
+  .mobile-table-card__desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--text-muted);
+  }
+
+  .mobile-table-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-primary);
+  }
+
+  .mobile-table-card__row:last-child {
+    border-bottom: none;
+  }
+
+  /* Карточки динамики */
+  .mobile-dynamics-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-dynamics-card__badge {
+    font-family: var(--font-display);
+    font-size: 10px;
+    line-height: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .mobile-dynamics-card__value {
+    font-family: var(--font-display);
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .mobile-dynamics-card__desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--text-secondary);
+  }
+
+  /* Сводка */
+  .mobile-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mobile-summary-card {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-summary-card__label {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-secondary);
+  }
+
+  .mobile-summary-card__value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 4px 0;
+  }
+
+  .mobile-summary-card__caption {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--text-secondary);
+  }
+
+  /* Выводы */
+  .mobile-conclusion-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-conclusion-card__title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    line-height: 120%;
+    margin-bottom: 8px;
+  }
+
+  .mobile-conclusion-card__text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 140%;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    flex-grow: 1;
+  }
+
+  .mobile-conclusion-card__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .mobile-conclusion-card__metric {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 18px;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 2px;
+  }
 }

@@ -488,13 +488,20 @@ function getActiveNavPage(target) {
 
 function updateNavActive(target) {
   const activeNav = getActiveNavPage(target);
-
   navLinksMain.forEach((l) => {
     l.classList.remove('is-active');
     l.removeAttribute('aria-current');
     if (l.dataset.page === activeNav) {
       l.classList.add('is-active');
       l.setAttribute('aria-current', 'page');
+    }
+  });
+
+  document.querySelectorAll('.mobile-nav__link').forEach((link) => {
+    link.classList.remove('is-active');
+    const linkPage = link.dataset.page;
+    if (linkPage === target || (activeNav === 'articles' && linkPage === 'article-1')) {
+      link.classList.add('is-active');
     }
   });
 }
@@ -1014,7 +1021,62 @@ function initBlockTabs() {
   });
 }
 
-// Единая точка инициализации всего приложения
+// Плавающее мобильное меню
+function initMobileNav() {
+  // Ищем все меню на странице (так как мы дублировали его для разных страниц)
+  document.querySelectorAll('.mobile-nav').forEach(mobileNav => {
+    mobileNav.addEventListener('click', (e) => {
+      if (e.target.closest('.mobile-nav__link')) {
+        mobileNav.classList.remove('is-open');
+        return;
+      }
+      mobileNav.classList.toggle('is-open');
+    });
+  });
+}
+
+// Точки карусели на мобилке
+function initMobileCarousel() {
+  // Находим все карусели
+  document.querySelectorAll('.mobile-carousel').forEach(carousel => {
+    const track = carousel.querySelector('.mobile-carousel__track');
+    const dots = carousel.querySelectorAll('.mobile-carousel__dot');
+    
+    if (track && dots.length) {
+      track.addEventListener('scroll', () => {
+        const index = Math.round(track.scrollLeft / track.offsetWidth);
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('is-active', i === index);
+        });
+      });
+    }
+  });
+}
+
+// Раскрывающаяся карточка "О проекте" (для главной)
+function initMobileAbout() {
+  const header = document.querySelector('.mobile-about__header');
+  const about = document.querySelector('.mobile-about');
+  if (!header || !about) return;
+
+  header.addEventListener('click', () => {
+    const isOpen = about.classList.toggle('is-open');
+    header.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+
+// Закрытие баннера в мобильной версии
+function initMobileBanner() {
+  const closeBtn = document.getElementById('closeBanner');
+  const banner = document.getElementById('mobileBanner');
+  if (closeBtn && banner) {
+    closeBtn.addEventListener('click', () => {
+      banner.style.display = 'none';
+    });
+  }
+}
+
+// Единая точка инициализации
 function initApp() {
   measureArcs();
   renderDynamicsChart();
@@ -1032,6 +1094,12 @@ function initApp() {
   initRouting();
   initLightbox();
   initBlockTabs();
+  
+  // Инициализация мобильных элементов
+  initMobileNav();
+  initMobileCarousel();
+  initMobileAbout();
+  initMobileBanner();
 }
 
 if (document.readyState === 'loading') {

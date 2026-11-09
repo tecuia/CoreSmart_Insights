@@ -465,9 +465,9 @@ const PAGE_ORDER = [
 const PAGE_META = {
   home:         { label: 'Главная' },
   overview:     { label: 'Общие показатели' },
-  'article-1':  { label: 'Статью №1' },
-  'article-2':  { label: 'Статью №2' },
-  'article-3':  { label: 'Статью №3' },
+  'article-1':  { label: 'Статья №1' },      
+  'article-2':  { label: 'Статья №2' },     
+  'article-3':  { label: 'Статья №3' },      
   bundles:      { label: 'Лучшие связки' },
   conclusions:  { label: 'Выводы' },
 };
@@ -509,29 +509,28 @@ function updateNavActive(target) {
 function updateFooter(currentPage) {
   const idx = PAGE_ORDER.indexOf(currentPage);
 
-  if (idx > 0) {
-    const prevPage = PAGE_ORDER[idx - 1];
-    footerPrev.hidden = false;
-    footerPrev.dataset.page = prevPage;
-    const label = footerPrev.querySelector('.site-footer__label');
-    if (label) label.textContent = `Перейти к: ${PAGE_META[prevPage].label}`;
-  } else {
-    footerPrev.hidden = true;
-    footerPrev.dataset.page = '';
-  }
+    if (idx > 0) {
+      const prevPage = PAGE_ORDER[idx - 1];
+      footerPrev.hidden = false;
+      footerPrev.dataset.page = prevPage;
+      const label = footerPrev.querySelector('.site-footer__label');
+      if (label) label.textContent = PAGE_META[prevPage].label;   
+    } else {
+      footerPrev.hidden = true;
+      footerPrev.dataset.page = '';
+    }
 
-  if (idx >= 0 && idx < PAGE_ORDER.length - 1) {
-    const nextPage = PAGE_ORDER[idx + 1];
-    footerNext.hidden = false;
-    footerNext.dataset.page = nextPage;
-    const label = footerNext.querySelector('.site-footer__label');
-    if (label) label.textContent = `Перейти к: ${PAGE_META[nextPage].label}`;
-  } else {
-    footerNext.hidden = true;
-    footerNext.dataset.page = '';
+    if (idx >= 0 && idx < PAGE_ORDER.length - 1) {
+      const nextPage = PAGE_ORDER[idx + 1];
+      footerNext.hidden = false;
+      footerNext.dataset.page = nextPage;
+      const label = footerNext.querySelector('.site-footer__label');
+      if (label) label.textContent = PAGE_META[nextPage].label;   
+    } else {
+      footerNext.hidden = true;
+      footerNext.dataset.page = '';
+    }
   }
-}
-
 function updateHeaderVisibility(currentPage) {
   if (!siteHeader) return;
   siteHeader.hidden = (currentPage === 'home');

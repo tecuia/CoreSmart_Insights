@@ -149,6 +149,8 @@ body::-webkit-scrollbar {
 }
 
 .main-nav__caret {
+  display: block;
+  align-self: center;
   flex-shrink: 0;
   color: var(--text-muted);
   transition: transform 0.2s ease, color 0.2s ease;
@@ -875,6 +877,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-bottom: clamp(16px, 2vh, 24px);
 }
 
 .hypotheses__title {
@@ -947,6 +950,9 @@ body::-webkit-scrollbar {
   background: var(--bg-subtle);
   border: 1px solid var(--border);
   border-radius: 16px;
+}
+.hypotheses__grid .scenario-card {
+  gap: 10px;
 }
 
 .hypothesis-card--primary {
@@ -1059,8 +1065,8 @@ body::-webkit-scrollbar {
 }
 
 .logic-arrow {
-  align-self: flex-start;
-  margin-top: 30px;
+  align-self: center;
+  margin-top: 0;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 14px;
@@ -1169,7 +1175,7 @@ body::-webkit-scrollbar {
   line-height: 108%;
   letter-spacing: -1px;
   color: var(--text-primary);
-  max-width: 860px;
+  max-width: 1260px;
 }
 
 .report__period {
@@ -1217,6 +1223,10 @@ body::-webkit-scrollbar {
 .filter.active {
   background: var(--accent-primary);
   color: var(--text-inverse);
+}
+
+.filter.active .filter__icon {
+  filter: brightness(0) invert(1);
 }
 
 .filter.active:hover {
@@ -1431,6 +1441,7 @@ body::-webkit-scrollbar {
   display: flex;
   gap: 12px;
   align-items: flex-end;
+  height: 156px;
 }
 
 .chart-bars__item {
@@ -1662,6 +1673,32 @@ body::-webkit-scrollbar {
   font-size: 16px;
   line-height: 24px;
   color: var(--text-secondary);
+}
+
+.article-card__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 24px;
+  background: var(--border);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.article-card__preview-icon {
+  flex-shrink: 0;
+}
+
+.article-card__desc {
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-secondary);
+  flex-grow: 1;
 }
 
 .coresmart-role {
@@ -3576,6 +3613,7 @@ body {
 }
 
 .stats-table__th {
+  position: relative;
   padding: 16px 24px;
   background: var(--bg-subtle);
   border-bottom: 1px solid var(--border);
@@ -3606,14 +3644,26 @@ body {
 }
 
 .stats-table__th.is-sorted::after {
-  content: ' ↓';
+  content: '↓';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
   font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .stats-table__th.is-sorted-asc::after {
-  content: ' ↑';
+  content: '↑';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
 }
-
 :where(.stats-table) td {
   padding: 8px 24px;
   border-bottom: 1px solid var(--border);
@@ -4614,7 +4664,7 @@ body {
 
 .patterns__body {
   display: flex;
-  gap: 20px;
+  gap: 32px;
   align-items: center;
 }
 
@@ -4817,7 +4867,7 @@ body {
 }
 
 .patterns__chart {
-  flex: 0 1 380px;
+  flex: 0 0 420px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -5167,6 +5217,14 @@ body {
   line-height: 14px;
   color: var(--scen-color);
   word-break: break-all;
+  display: inline-block;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.scenario-card__link:hover {
+  background: color-mix(in srgb, var(--scen-bg) 70%, var(--scen-color) 30%);
+  color: var(--scen-color);
 }
 
 .scenario-card__metrics {

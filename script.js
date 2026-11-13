@@ -1068,88 +1068,73 @@ function initHomeScrollAnimation() {
 
   if (!heroLogo || !siteHeader || !headerLogo || !mainNav) return;
 
-  heroLogo.style.position = 'fixed';
-  heroLogo.style.pointerEvents = 'none';
-  heroLogo.style.zIndex = '90';
-
   let startRect = { top: 0, left: 0, width: 0, height: 0 };
   let headerRect = { top: 0, left: 0, width: 0, height: 0 };
+  let cachedVh = window.innerHeight || 800;
 
   const updatePositions = () => {
-    gsap.set(heroLogo, { clearProps: 'width,height,top,left,xPercent,yPercent,opacity' });
-    
-    // Замеряем стартовую позицию (центр экрана)
-    const sr = heroLogo.getBoundingClientRect();
-    startRect = { top: sr.top, left: sr.left, width: sr.width, height: sr.height };
+    cachedVh = window.innerHeight || 800;
+    const vw = window.innerWidth;
 
-    // Временно показываем шапку, чтобы замерить точную позицию логотипа в ней
+    heroLogo.style.opacity = '0';
+    gsap.set(heroLogo, { clearProps: 'width,height,top,left' });
+    
+    const logoRect = heroLogo.getBoundingClientRect();
+    let w = logoRect.width || 200;
+    let h = logoRect.height || 100;
+
+    startRect = {
+      top: (cachedVh - h) / 2,
+      left: (vw - w) / 2,
+      width: w,
+      height: h
+    };
+
     const wasVisible = siteHeader.classList.contains('is-visible');
     siteHeader.style.transition = 'none';
-    siteHeader.style.transform = 'translateY(0)';
     siteHeader.style.opacity = '1';
-    siteHeader.style.pointerEvents = 'auto';
-    void siteHeader.offsetHeight; // Форсируем пересчет
+    void siteHeader.offsetHeight; 
     
     const hr = headerLogo.getBoundingClientRect();
     headerRect = { top: hr.top, left: hr.left, width: hr.width, height: hr.height };
     
-    // Возвращаем шапку как было
-    siteHeader.style.transform = '';
     siteHeader.style.opacity = '';
-    siteHeader.style.pointerEvents = '';
     if (!wasVisible) siteHeader.classList.remove('is-visible');
     siteHeader.style.transition = '';
 
-    if (window.scrollY <= 50) {
-      gsap.set(heroLogo, { 
-        top: startRect.top, left: startRect.left, 
-        width: startRect.width, height: startRect.height,
-        xPercent: 0, yPercent: 0, opacity: 1 
-      });
-      mainNav.classList.remove('is-revealed');
-    }
+    handleScroll();
   };
 
-  setTimeout(updatePositions, 300);
-  window.addEventListener('resize', updatePositions);
-
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
     if (homePage.hidden) return;
     if (window.innerWidth <= 768) return;
     if (!startRect.width || !headerRect.width) return;
 
     const scrollY = window.scrollY;
-    const vh = window.innerHeight || 800; // Высота экрана (с фоллбэком)
+    const vh = cachedVh; 
 
-    // 1. ПОЯВЛЕНИЕ ШАПКИ
-    // Выезжает только когда белая секция закрыла 80% экрана
     if (scrollY > vh * 0.8) {
       siteHeader.classList.add('is-visible');
     } else {
       siteHeader.classList.remove('is-visible');
     }
 
-    // 2. ПОЛЕТ ЛОГОТИПА
-    // Даем анимации чуть больше скролла, чтобы она была плавной (95% высоты экрана)
     const maxScroll = vh * 0.95; 
     const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
 
     if (progress < 0.85) {
-      // Логотип еще летит — прячем пункты меню
       mainNav.classList.remove('is-revealed');
 
       let curX, curY, curW, curH;
       const startCenterX = startRect.left + startRect.width / 2;
 
       if (progress <= 0.6) {
-        // Фаза 1: Летим строго ВВЕРХ (60% пути)
         const p = progress / 0.6;
         curY = startRect.top + (headerRect.top - startRect.top) * p;
         curW = startRect.width + (headerRect.width - startRect.width) * p;
         curH = startRect.height + (headerRect.height - startRect.height) * p;
-        curX = startCenterX - curW / 2; // Держим центр по горизонтали
+        curX = startCenterX - curW / 2; 
       } else {
-        // Фаза 2: Летим ВЛЕВО до финальной точки (оставшиеся 25% пути)
         const p = (progress - 0.6) / 0.25;
         const phase2StartX = startCenterX - headerRect.width / 2;
         
@@ -1167,12 +1152,21 @@ function initHomeScrollAnimation() {
       gsap.set(headerLogo, { opacity: 0 });
 
     } else {
-      // ФАЗА 3: Логотип на месте, плавно проявляем меню
       gsap.set(heroLogo, { opacity: 0 });
       gsap.set(headerLogo, { opacity: 1 });
       mainNav.classList.add('is-revealed');
     }
-  });
+  };
+
+  window.addEventListener('load', updatePositions);
+  if (document.readyState === 'complete') {
+    updatePositions();
+  } else {
+    setTimeout(updatePositions, 150);
+  }
+  
+  window.addEventListener('resize', updatePositions);
+  window.addEventListener('scroll', handleScroll);
 }
 
 function initApp() {

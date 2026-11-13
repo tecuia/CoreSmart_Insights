@@ -321,7 +321,7 @@ body::-webkit-scrollbar {
 
 /* ===== HERO ===== */
 .hero {
-  position: sticky; /* Фон "прилипает" при скролле */
+  position: sticky; 
   top: 0;
   height: 100vh;
   width: 100%;
@@ -340,14 +340,16 @@ body::-webkit-scrollbar {
 }
 
 .hero__logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  left: 0;
   width: clamp(140px, 22%, 380px);
   height: auto;
   pointer-events: none;
-  transition: none !important; 
+  opacity: 0; 
+  will-change: top, left, width, height, opacity; 
+  transform: none; 
+  z-index: 90;
 }
 
 .page[data-page="home"] > .about,

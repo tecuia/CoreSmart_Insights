@@ -1,4 +1,3 @@
-// Три набора данных для дашборда «Общие показатели» — переключаются фильтрами
 const DATASETS = [
   {
     visits:      { plan: 17857, fact: 21945 },
@@ -29,7 +28,6 @@ const DATASETS = [
   },
 ];
 
-// Форматирование чисел и процентов в русской локали
 const formatInt     = (n) => Math.round(n).toLocaleString('ru-RU').replace(/\u00A0/g, ' ');
 const formatDec     = (n, d = 2) => n.toFixed(d).replace('.', ',');
 const formatMoney   = (n, d = 2) => `${formatDec(n, d)} ₽`;
@@ -43,10 +41,8 @@ const tagClass = (percent) => {
   return 'metric-card__tag--danger';
 };
 
-// Текущее состояние дашборда — стартует с первого набора данных
 const state = structuredClone(DATASETS[0]);
 
-// Анимирует число от from к to; предыдущий твин на этом элементе убивается
 function animateNumber(el, from, to, formatter, duration = 0.8) {
   if (!el) return;
 
@@ -67,13 +63,11 @@ function animateNumber(el, from, to, formatter, duration = 0.8) {
   });
 }
 
-// Хелпер для SVG-твинов: убивает предыдущий твин на элементе
 function tweenFromTo(el, fromVars, toVars) {
   if (el._tween) el._tween.kill();
   el._tween = gsap.fromTo(el, fromVars, toVars);
 }
 
-// Предрасчёт длин SVG-путей для анимации stroke-dashoffset
 function measureArcs() {
   document.querySelectorAll('.chart-gauge__arc').forEach((arc) => {
     const len = arc.getTotalLength();
@@ -256,7 +250,6 @@ function updateCpaCard(cardName, data, stateKey) {
   state[stateKey] = { value: data.value, markerX: data.markerX };
 }
 
-// Синхронизирует текст цитаты с новым датасетом; вызывается до обновления state
 function updateQuote(data) {
   const visitsSpan      = document.querySelector('[data-quote="visits"]');
   const readsSpan       = document.querySelector('[data-quote="reads"]');
@@ -277,7 +270,6 @@ function updateQuote(data) {
   }
 }
 
-// Переключает все карточки дашборда на набор данных по индексу фильтра
 function updateDashboard(index) {
   const data = DATASETS[index];
   updateQuote(data);
@@ -329,7 +321,6 @@ function initMetricsTabs() {
   });
 }
 
-// Данные по 43 дням кампании; пики 08.07 и 28.07, провал 09–12.07
 const DYNAMICS_DATA = {
   visits: [
     50, 500, 780, 400, 250, 200, 220, 280, 400, 550,
@@ -362,7 +353,6 @@ const DYNAMICS_KEY_POINTS = [
   { i: 40, line: 'clicks', value: 560,  color: '#10B981', label: '28 июля · 700',   tipX: 1363, tipY: 379 },
 ];
 
-// Строит SVG-график динамики по трём линиям и ключевым точкам
 function renderDynamicsChart() {
   const svg = document.getElementById('dynamics-svg');
   if (!svg) return;
@@ -509,35 +499,43 @@ function updateNavActive(target) {
 function updateFooter(currentPage) {
   const idx = PAGE_ORDER.indexOf(currentPage);
 
-    if (idx > 0) {
-      const prevPage = PAGE_ORDER[idx - 1];
-      footerPrev.hidden = false;
-      footerPrev.dataset.page = prevPage;
-      const label = footerPrev.querySelector('.site-footer__label');
-      if (label) label.textContent = PAGE_META[prevPage].label;   
-    } else {
-      footerPrev.hidden = true;
-      footerPrev.dataset.page = '';
-    }
-
-    if (idx >= 0 && idx < PAGE_ORDER.length - 1) {
-      const nextPage = PAGE_ORDER[idx + 1];
-      footerNext.hidden = false;
-      footerNext.dataset.page = nextPage;
-      const label = footerNext.querySelector('.site-footer__label');
-      if (label) label.textContent = PAGE_META[nextPage].label;   
-    } else {
-      footerNext.hidden = true;
-      footerNext.dataset.page = '';
-    }
+  if (idx > 0) {
+    const prevPage = PAGE_ORDER[idx - 1];
+    footerPrev.hidden = false;
+    footerPrev.dataset.page = prevPage;
+    const label = footerPrev.querySelector('.site-footer__label');
+    if (label) label.textContent = PAGE_META[prevPage].label;   
+  } else {
+    footerPrev.hidden = true;
+    footerPrev.dataset.page = '';
   }
-function updateHeaderVisibility(currentPage) {
-  if (!siteHeader) return;
-  siteHeader.hidden = (currentPage === 'home');
-  siteHeader.classList.toggle('site-header--overlay', currentPage === 'article-1');
+
+  if (idx >= 0 && idx < PAGE_ORDER.length - 1) {
+    const nextPage = PAGE_ORDER[idx + 1];
+    footerNext.hidden = false;
+    footerNext.dataset.page = nextPage;
+    const label = footerNext.querySelector('.site-footer__label');
+    if (label) label.textContent = PAGE_META[nextPage].label;   
+  } else {
+    footerNext.hidden = true;
+    footerNext.dataset.page = '';
+  }
 }
 
-// Показывает страницу, обновляет навигацию/футер и (опционально) пишет в историю
+function updateHeaderVisibility(currentPage) {
+  if (!siteHeader) return;
+  siteHeader.hidden = false;
+  siteHeader.classList.toggle('site-header--overlay', currentPage === 'article-1');
+  
+  if (currentPage !== 'home') {
+    siteHeader.classList.add('is-visible');
+  } else {
+    if (window.scrollY <= 50) {
+      siteHeader.classList.remove('is-visible');
+    }
+  }
+}
+
 function showPage(target, { push = true } = {}) {
   if (!PAGE_ORDER.includes(target)) return;
 
@@ -553,14 +551,12 @@ function showPage(target, { push = true } = {}) {
   if (push) history.pushState({ page: target }, '', `#${target}`);
 }
 
-// Читает hash из URL и открывает соответствующую страницу (или главную)
 function showPageFromLocation() {
   const hash = location.hash.replace('#', '');
   const target = PAGE_ORDER.includes(hash) ? hash : 'home';
   showPage(target, { push: false });
 }
 
-// Навигация по ссылкам и дропдауну, синхронизация с URL, реакция на back/forward
 function initRouting() {
   pageLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -596,7 +592,6 @@ function initRouting() {
   showPageFromLocation();
 }
 
-// Копирует карточки креативов из первой (открытой) кампании во все остальные
 function cloneCreativesGrids() {
   const sourceGrid = document.querySelector('.campaign-accordion.is-open .creatives-grid');
   if (!sourceGrid) return;
@@ -607,7 +602,6 @@ function cloneCreativesGrids() {
   });
 }
 
-// Аккордеон кампаний: всегда открыт только один, синхронизируется aria-expanded
 function initAccordions() {
   document.querySelectorAll('.campaign-accordion').forEach((acc) => {
     const header = acc.querySelector('.campaign-accordion__header');
@@ -633,7 +627,6 @@ function initAccordions() {
   });
 }
 
-// Визуальная подсветка активных кнопок в тулбаре креативов
 function initCreativesControls() {
   document.querySelectorAll('.creatives-sort__btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -685,7 +678,6 @@ const statsState = {
   limit: 15,
 };
 
-// Инициализация таблицы «Сравнение по креативам»: сортировка, фильтры, поиск, пагинация
 function initStatsTable() {
   const tbody = document.getElementById('stats-tbody');
   const countEl = document.getElementById('stats-count');
@@ -884,7 +876,6 @@ function initStatsTable() {
   renderTable();
 }
 
-// Доли времени по блокам статьи для 20 креативов (стеклянная диаграмма)
 const STACKED_DATA = [
   [30, 25, 15, 12, 10, 8],
   [33, 17, 16, 16, 11, 7],
@@ -930,7 +921,6 @@ function renderStackedChart() {
   `).join('');
 }
 
-// Генерирует облако точек для корреляционных графиков
 function generateCorrelationPoints(id, count, type, color) {
   const container = document.getElementById(id);
   if (!container) return;
@@ -1020,9 +1010,7 @@ function initBlockTabs() {
   });
 }
 
-// Плавающее мобильное меню
 function initMobileNav() {
-  // Ищем все меню на странице (так как мы дублировали его для разных страниц)
   document.querySelectorAll('.mobile-nav').forEach(mobileNav => {
     mobileNav.addEventListener('click', (e) => {
       if (e.target.closest('.mobile-nav__link')) {
@@ -1034,9 +1022,7 @@ function initMobileNav() {
   });
 }
 
-// Точки карусели на мобилке
 function initMobileCarousel() {
-  // Находим все карусели
   document.querySelectorAll('.mobile-carousel').forEach(carousel => {
     const track = carousel.querySelector('.mobile-carousel__track');
     const dots = carousel.querySelectorAll('.mobile-carousel__dot');
@@ -1052,7 +1038,6 @@ function initMobileCarousel() {
   });
 }
 
-// Раскрывающаяся карточка "О проекте" (для главной)
 function initMobileAbout() {
   const header = document.querySelector('.mobile-about__header');
   const about = document.querySelector('.mobile-about');
@@ -1064,7 +1049,6 @@ function initMobileAbout() {
   });
 }
 
-// Закрытие баннера в мобильной версии
 function initMobileBanner() {
   const closeBtn = document.getElementById('closeBanner');
   const banner = document.getElementById('mobileBanner');
@@ -1075,7 +1059,122 @@ function initMobileBanner() {
   }
 }
 
-// Единая точка инициализации
+function initHomeScrollAnimation() {
+  const heroLogo = document.querySelector('.hero__logo');
+  const siteHeader = document.querySelector('.site-header');
+  const mainNav = document.querySelector('.main-nav');
+  const headerLogo = document.querySelector('.main-nav__logo img') || document.querySelector('.main-nav > img');
+  const homePage = document.querySelector('.page[data-page="home"]');
+
+  if (!heroLogo || !siteHeader || !headerLogo || !mainNav) return;
+
+  heroLogo.style.position = 'fixed';
+  heroLogo.style.pointerEvents = 'none';
+  heroLogo.style.zIndex = '90';
+
+  let startRect = { top: 0, left: 0, width: 0, height: 0 };
+  let headerRect = { top: 0, left: 0, width: 0, height: 0 };
+
+  const updatePositions = () => {
+    gsap.set(heroLogo, { clearProps: 'width,height,top,left,xPercent,yPercent,opacity' });
+    
+    // Замеряем стартовую позицию (центр экрана)
+    const sr = heroLogo.getBoundingClientRect();
+    startRect = { top: sr.top, left: sr.left, width: sr.width, height: sr.height };
+
+    // Временно показываем шапку, чтобы замерить точную позицию логотипа в ней
+    const wasVisible = siteHeader.classList.contains('is-visible');
+    siteHeader.style.transition = 'none';
+    siteHeader.style.transform = 'translateY(0)';
+    siteHeader.style.opacity = '1';
+    siteHeader.style.pointerEvents = 'auto';
+    void siteHeader.offsetHeight; // Форсируем пересчет
+    
+    const hr = headerLogo.getBoundingClientRect();
+    headerRect = { top: hr.top, left: hr.left, width: hr.width, height: hr.height };
+    
+    // Возвращаем шапку как было
+    siteHeader.style.transform = '';
+    siteHeader.style.opacity = '';
+    siteHeader.style.pointerEvents = '';
+    if (!wasVisible) siteHeader.classList.remove('is-visible');
+    siteHeader.style.transition = '';
+
+    if (window.scrollY <= 50) {
+      gsap.set(heroLogo, { 
+        top: startRect.top, left: startRect.left, 
+        width: startRect.width, height: startRect.height,
+        xPercent: 0, yPercent: 0, opacity: 1 
+      });
+      mainNav.classList.remove('is-revealed');
+    }
+  };
+
+  setTimeout(updatePositions, 300);
+  window.addEventListener('resize', updatePositions);
+
+  window.addEventListener('scroll', () => {
+    if (homePage.hidden) return;
+    if (window.innerWidth <= 768) return;
+    if (!startRect.width || !headerRect.width) return;
+
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight || 800; // Высота экрана (с фоллбэком)
+
+    // 1. ПОЯВЛЕНИЕ ШАПКИ
+    // Выезжает только когда белая секция закрыла 80% экрана
+    if (scrollY > vh * 0.8) {
+      siteHeader.classList.add('is-visible');
+    } else {
+      siteHeader.classList.remove('is-visible');
+    }
+
+    // 2. ПОЛЕТ ЛОГОТИПА
+    // Даем анимации чуть больше скролла, чтобы она была плавной (95% высоты экрана)
+    const maxScroll = vh * 0.95; 
+    const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+
+    if (progress < 0.85) {
+      // Логотип еще летит — прячем пункты меню
+      mainNav.classList.remove('is-revealed');
+
+      let curX, curY, curW, curH;
+      const startCenterX = startRect.left + startRect.width / 2;
+
+      if (progress <= 0.6) {
+        // Фаза 1: Летим строго ВВЕРХ (60% пути)
+        const p = progress / 0.6;
+        curY = startRect.top + (headerRect.top - startRect.top) * p;
+        curW = startRect.width + (headerRect.width - startRect.width) * p;
+        curH = startRect.height + (headerRect.height - startRect.height) * p;
+        curX = startCenterX - curW / 2; // Держим центр по горизонтали
+      } else {
+        // Фаза 2: Летим ВЛЕВО до финальной точки (оставшиеся 25% пути)
+        const p = (progress - 0.6) / 0.25;
+        const phase2StartX = startCenterX - headerRect.width / 2;
+        
+        curY = headerRect.top;
+        curX = phase2StartX + (headerRect.left - phase2StartX) * p;
+        curW = headerRect.width;
+        curH = headerRect.height;
+      }
+
+      gsap.set(heroLogo, {
+        top: curY, left: curX,
+        width: curW, height: curH,
+        opacity: 1
+      });
+      gsap.set(headerLogo, { opacity: 0 });
+
+    } else {
+      // ФАЗА 3: Логотип на месте, плавно проявляем меню
+      gsap.set(heroLogo, { opacity: 0 });
+      gsap.set(headerLogo, { opacity: 1 });
+      mainNav.classList.add('is-revealed');
+    }
+  });
+}
+
 function initApp() {
   measureArcs();
   renderDynamicsChart();
@@ -1094,11 +1193,12 @@ function initApp() {
   initLightbox();
   initBlockTabs();
   
-  // Инициализация мобильных элементов
   initMobileNav();
   initMobileCarousel();
   initMobileAbout();
   initMobileBanner();
+  
+  initHomeScrollAnimation();
 }
 
 if (document.readyState === 'loading') {

@@ -78,7 +78,68 @@ body::-webkit-scrollbar {
 
 /* ===== ШАПКА ===== */
 .site-header {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   padding-top: clamp(20px, 3vh, 32px);
+  opacity: 0;
+  filter: blur(5px);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  pointer-events: none;
+}
+
+.site-header.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.site-header__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.main-nav {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 20px 40px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  max-width: 100%;
+}
+
+.main-nav__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.main-nav__logo img,
+.main-nav > img {
+  height: 26px; 
+  width: auto;
+  display: block;
+}
+
+.main-nav > .main-nav__link,
+.main-nav > .main-nav__item {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease; 
+}
+
+.main-nav.is-revealed > .main-nav__link,
+.main-nav.is-revealed > .main-nav__item {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.25s ease 0.75s; 
 }
 
 .site-header[hidden] {
@@ -260,18 +321,22 @@ body::-webkit-scrollbar {
 
 /* ===== HERO ===== */
 .hero {
-  position: relative;
+  position: sticky; /* Фон "прилипает" при скролле */
+  top: 0;
+  height: 100vh;
   width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
-  border-radius: 10px;
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0;
   overflow: hidden;
+  z-index: 1;
 }
 
 .hero__bg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero__logo {
@@ -282,10 +347,24 @@ body::-webkit-scrollbar {
   width: clamp(140px, 22%, 380px);
   height: auto;
   pointer-events: none;
+  transition: none !important; 
 }
 
-/* ===== О ПРОЕКТЕ ===== */
+.page[data-page="home"] > .about,
+.page[data-page="home"] > .task,
+.page[data-page="home"] > .campaign-articles,
+.page[data-page="home"] > .hypotheses {
+  position: relative;
+  z-index: 10;
+  background-color: var(--bg-white);
+}
+
 .about {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-white);
+  border-radius: 40px 40px 0 0; 
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   padding-top: clamp(40px, 6vh, 80px);
   padding-bottom: clamp(40px, 6vh, 80px);
 }
@@ -1065,13 +1144,41 @@ body::-webkit-scrollbar {
 }
 
 .logic-arrow {
+  position: relative;
   align-self: center;
-  margin-top: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 20px;
+  margin: 0;
+  font-size: 0;      
+  line-height: 0;
   flex-shrink: 0;
+}
+
+.logic-arrow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transform: translateY(-50%);
+}
+
+.logic-arrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 7px solid currentColor;
+  transform: translateY(-50%);
 }
 
 .logic-arrow--primary   { color: var(--accent-primary); }
@@ -4666,6 +4773,7 @@ body {
   display: flex;
   gap: 32px;
   align-items: center;
+  justify-content: space-between; 
 }
 
 .patterns__list {
@@ -4674,6 +4782,7 @@ body {
   gap: 24px;
   flex: 1 1 0;
   min-width: 0;
+  max-width: 1150px; 
 }
 
 .pattern-card {
@@ -4843,6 +4952,7 @@ body {
 
 .pattern-topic__track {
   flex: 1 1 60px;
+  max-width: 420px; 
   min-width: 60px;
   height: 8px;
   background: var(--border);
@@ -7451,7 +7561,6 @@ body {
     color: var(--accent-primary);
   }
 
-  /* Карточка "О проекте" */
   .mobile-about {
     display: flex;
     flex-direction: column;
@@ -7462,7 +7571,6 @@ body {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   }
 
-  /* Заголовок-кнопка */
   .mobile-about__header {
     display: flex;
     align-items: center;
@@ -7496,7 +7604,6 @@ body {
     color: var(--accent-primary);
   }
 
-  /* Превью-текст (закрытое состояние) */
   .mobile-about__text {
     margin-top: 4px;
     font-family: var(--font-body);
@@ -7515,7 +7622,6 @@ body {
     margin-top: 0;
   }
 
-  /* Раскрывающийся контент */
   .mobile-about__expanded {
     display: flex;
     flex-direction: column;
@@ -7554,7 +7660,6 @@ body {
     color: var(--text-secondary);
   }
 
-  /* Карточка периода */
   .mobile-about__period {
     display: flex;
     flex-direction: column;
@@ -7602,11 +7707,13 @@ body {
 
   .mobile-carousel__track {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-bottom: 24px;
+    padding-right: 10%;
   }
 
   .mobile-carousel__track::-webkit-scrollbar {
@@ -7677,7 +7784,7 @@ body {
 
   .mobile-carousel__dots {
     position: absolute;
-    bottom: 16px;
+    bottom: 2px;
     left: 0;
     right: 0;
     display: flex;
@@ -7806,11 +7913,7 @@ body {
     background: var(--accent-primary);
     margin-top: 2px;
   }
-    /* ============================================================
-     МОБИЛЬНАЯ ВЕРСИЯ: ПОКАЗАТЕЛИ
-     ============================================================ */
 
-  /* Скрываем десктопные элементы на этой странице */
   .page[data-page="overview"] .report,
   .page[data-page="overview"] .overview,
   .page[data-page="overview"] .articles,
@@ -7826,7 +7929,6 @@ body {
     min-height: 100vh;
   }
 
-  /* Баннер */
   .mobile-banner {
     position: sticky;
     top: 0;
@@ -7857,7 +7959,6 @@ body {
     cursor: pointer;
   }
 
-  /* Контент */
   .mobile-overview__content {
     padding: 20px;
     display: flex;
@@ -7865,7 +7966,6 @@ body {
     gap: 32px;
   }
 
-  /* Заголовок */
   .mobile-header {
     display: flex;
     flex-direction: column;
@@ -7898,7 +7998,6 @@ body {
     color: var(--text-secondary);
   }
 
-  /* Секции */
   .mobile-section {
     display: flex;
     flex-direction: column;
@@ -7930,7 +8029,6 @@ body {
     margin-top: 8px;
   }
 
-  /* Сетка метрик */
   .mobile-metrics-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8016,7 +8114,6 @@ body {
   .text-amber { color: var(--accent-highlight); }
   .text-pink { color: var(--pink); }
 
-  /* Карусель (уже есть, но уточним для карточек) */
   .mobile-carousel {
     position: relative;
     display: flex;
@@ -8031,16 +8128,15 @@ body {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding-bottom: 24px; /* Место для точек */
+    padding-bottom: 24px; 
   }
 
   .mobile-carousel__track::-webkit-scrollbar {
     display: none;
   }
 
-  /* Карточка статьи */
   .mobile-article-card {
-    flex: 0 0 100%;
+    flex: 0 0 80%; 
     scroll-snap-align: center;
     display: flex;
     flex-direction: column;
@@ -8099,7 +8195,6 @@ body {
     margin-bottom: 16px;
   }
 
-  /* Блок CoreSmart */
   .mobile-coresmart {
     display: flex;
     flex-direction: column;
@@ -8126,7 +8221,6 @@ body {
     color: var(--text-primary);
   }
 
-  /* Таблицы */
   .mobile-table-card {
     flex: 0 0 100%;
     scroll-snap-align: center;
@@ -8193,7 +8287,6 @@ body {
     border-bottom: none;
   }
 
-  /* Карточки динамики */
   .mobile-dynamics-card {
     flex: 0 0 100%;
     scroll-snap-align: center;
@@ -8230,7 +8323,6 @@ body {
     color: var(--text-secondary);
   }
 
-  /* Сводка */
   .mobile-summary-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8269,16 +8361,18 @@ body {
     color: var(--text-secondary);
   }
 
-  /* Выводы */
   .mobile-conclusion-card {
-    flex: 0 0 100%;
+    flex: 0 0 85%;
+    width: 85%;
+    max-width: 85%;
+    box-sizing: border-box;
     scroll-snap-align: center;
     display: flex;
     flex-direction: column;
     padding: 12px;
     background: var(--bg-subtle);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 8px; 
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
 

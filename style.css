@@ -2708,14 +2708,6 @@ body {
   position: relative;
 }
 
-.site-header--overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-}
-
 .page[data-page="article-1"] {
   position: relative;
   z-index: 1;
